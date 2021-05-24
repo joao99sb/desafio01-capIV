@@ -9,6 +9,7 @@ import {
 import { v4 as uuid } from 'uuid';
 
 import { User } from '../../users/entities/User';
+import { Transfer } from './Transfer';
 
 enum OperationType {
   DEPOSIT = 'deposit',
@@ -36,6 +37,13 @@ export class Statement {
   @Column({ type: 'enum', enum: OperationType })
   type: OperationType;
 
+  @ManyToOne(() => Transfer)
+  @JoinColumn({ name: 'transfer_id' })
+  transfer: Transfer
+
+  @Column()
+  transfer_id?: string
+
   @CreateDateColumn()
   created_at: Date;
 
@@ -48,3 +56,4 @@ export class Statement {
     }
   }
 }
+export { OperationType }
